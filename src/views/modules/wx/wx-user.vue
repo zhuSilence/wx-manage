@@ -53,6 +53,8 @@
             <el-table-column prop="subscribe" header-align="center" align="center" label="是否关注">
                 <span slot-scope="scope">{{scope.row.subscribe?"是":"否"}}</span>
             </el-table-column>
+            <el-table-column prop="extraInfo" header-align="center" align="center" label="扩展信息">
+            </el-table-column>
             <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
                 <template slot-scope="scope">
                     <el-button type="text" size="small" @click="deleteHandle(scope.row.openid)">删除</el-button>
@@ -116,6 +118,7 @@ export default {
                 })
             }).then(({ data }) => {
                 if (data && data.code === 200) {
+                    console.log(data.page.list)
                     this.dataList = data.page.list
                     this.totalPage = data.page.totalCount
                 } else {
@@ -184,7 +187,7 @@ export default {
                     }
                 })
         },
-        
+
         sexFormat(row, column, cellValue) {
             let sexType = {
                 0: '未知',
