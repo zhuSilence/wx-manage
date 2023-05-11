@@ -41,7 +41,7 @@ export default {
                 this.$refs['dataForm'].resetFields()
                 if (this.dataForm.id) {
                     this.$http({
-                        url: this.$http.adornUrl(`/manage/wxUser/info/${this.dataForm.id}`),
+                        url: this.$http.adornUrl(`/manage/wxUser/info/${id}`),
                         method: 'get',
                         params: this.$http.adornParams()
                     }).then(({ data }) => {
