@@ -29,34 +29,35 @@
         <el-table :data="dataList" border v-loading="dataListLoading" @selection-change="selectionChangeHandle" style="width: 100%;">
             <el-table-column type="selection" header-align="center" align="center" width="50">
             </el-table-column>
-            <el-table-column prop="openid" header-align="center" align="center" label="openid">
+            <el-table-column prop="openid" header-align="center" align="left" width="280" label="openid">
             </el-table-column>
             <el-table-column prop="nickname" header-align="center" align="center" label="昵称">
             </el-table-column>
-            <el-table-column prop="sex" header-align="center" align="center" label="性别" :formatter="sexFormat">
-            </el-table-column>
+<!--            <el-table-column prop="sex" header-align="center" align="center" label="性别" :formatter="sexFormat">-->
+<!--            </el-table-column>-->
             <el-table-column prop="city" header-align="center" align="center" label="城市">
             </el-table-column>
             <el-table-column prop="headimgurl" header-align="center" align="center" label="头像">
                 <img class="headimg" slot-scope="scope" v-if="scope.row.headimgurl" :src="scope.row.headimgurl" />
             </el-table-column>
-            <el-table-column prop="tagidList" header-align="center" align="center" label="标签" show-overflow-tooltip>
-                <template slot-scope="scope">
-                    <span v-for="tagid in scope.row.tagidList" :key="tagid">{{getTagName(tagid)}} </span>
-                </template>
-            </el-table-column>
-            <el-table-column prop="subscribeTime" header-align="center" align="center" label="订阅时间">
+<!--            <el-table-column prop="tagidList" header-align="center" align="center" label="标签" show-overflow-tooltip>-->
+<!--                <template slot-scope="scope">-->
+<!--                    <span v-for="tagid in scope.row.tagidList" :key="tagid">{{getTagName(tagid)}} </span>-->
+<!--                </template>-->
+<!--            </el-table-column>-->
+            <el-table-column prop="subscribeTime" header-align="center" align="left" width="150" label="订阅时间">
                 <template slot-scope="scope">{{$moment(scope.row.subscribeTime).calendar()}}</template>
             </el-table-column>
-            <el-table-column prop="qrSceneStr" header-align="center" align="center" label="场景值">
-            </el-table-column>
+<!--            <el-table-column prop="qrSceneStr" header-align="center" align="center" label="场景值">-->
+<!--            </el-table-column>-->
             <el-table-column prop="subscribe" header-align="center" align="center" label="是否关注">
                 <span slot-scope="scope">{{scope.row.subscribe?"是":"否"}}</span>
             </el-table-column>
-            <el-table-column prop="extraInfo" header-align="center" align="center" label="扩展信息">
+            <el-table-column prop="extraInfo" header-align="center" align="left" width="180" label="扩展信息">
             </el-table-column>
             <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
                 <template slot-scope="scope">
+                    <el-button v-if="isAuth('wx:wxuser:update')" type="text" size="small" @click="updateHandle(scope.row.openid)">修改额度</el-button>
                     <el-button type="text" size="small" @click="deleteHandle(scope.row.openid)">删除</el-button>
                 </template>
             </el-table-column>
@@ -65,6 +66,8 @@
         </el-pagination>
         <wx-user-tags-manager ref="wxUserTagsEditor" :visible="showWxUserTagsEditor" @close="showWxUserTagsEditor=false"></wx-user-tags-manager>
         <wx-user-tagging ref="wxUserTagging" :wxUsers="dataListSelections"></wx-user-tagging>
+        <!-- 弹窗, 新增 / 修改 -->
+        <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></add-or-update>
     </div>
 </template>
 
@@ -72,6 +75,7 @@
 import WxUserTagsManager from '@/components/wx-user-tags-manager'
 import WxUserTagging from './wx-user-tagging'
 import { mapState } from 'vuex'
+import AddOrUpdate from "@/views/modules/wx/wx-user-add-or-update";
 export default {
     data() {
         return {
@@ -88,10 +92,11 @@ export default {
             showWxUserTagsEditor:false,
             dataListLoading: false,
             dataListSelections: [],
+            addOrUpdateVisible: false
         }
     },
     components: {
-        WxUserTagsManager,WxUserTagging
+        WxUserTagsManager,WxUserTagging,AddOrUpdate
     },
     activated() {
         this.getDataList()
@@ -199,6 +204,12 @@ export default {
         getTagName(tagid){
             let tag = this.wxUserTags.find(item=>item.id==tagid)
             return tag?tag.name : "?"
+        },
+        updateHandle(openid) {
+            this.addOrUpdateVisible = true
+            this.$nextTick(() => {
+                this.$refs.addOrUpdate.init(openid)
+            })
         }
     }
 }
