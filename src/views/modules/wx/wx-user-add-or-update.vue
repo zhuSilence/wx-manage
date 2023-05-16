@@ -4,8 +4,11 @@
             <el-form-item label="用户 OpenId" prop="id">
                 <el-input v-model="dataForm.id" disabled placeholder="OpenId"></el-input>
             </el-form-item>
-            <el-form-item label="输入额度" prop="url">
+            <el-form-item label="对话额度" prop="url">
                 <el-input-number v-model="dataForm.count" placeholder="数字类型"></el-input-number>
+            </el-form-item>
+            <el-form-item label="绘图额度" prop="url">
+                <el-input-number v-model="dataForm.imgCount" placeholder="数字类型"></el-input-number>
             </el-form-item>
 
         </el-form>
@@ -28,6 +31,9 @@ export default {
             dataRule: {
                 count: [
                     { required: true, message: '额度不能为空', trigger: 'blur' }
+                ],
+                imgCount: [
+                    { required: true, message: '额度不能为空', trigger: 'blur' }
                 ]
             }
         }
@@ -49,6 +55,7 @@ export default {
                             this.dataForm.id = data.wxUser.openid;
                             let extraInfo = JSON.parse(data.wxUser.extraInfo);
                             this.dataForm.count = extraInfo.openApiCount;
+                            this.dataForm.imgCount = extraInfo.imageApiCount;
                         }else{
                             this.$message.error(data.msg)
                         }
