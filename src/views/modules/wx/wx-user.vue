@@ -35,11 +35,11 @@
             </el-table-column>
 <!--            <el-table-column prop="sex" header-align="center" align="center" label="性别" :formatter="sexFormat">-->
 <!--            </el-table-column>-->
-            <el-table-column prop="city" header-align="center" align="center" label="城市">
-            </el-table-column>
-            <el-table-column prop="headimgurl" header-align="center" align="center" label="头像">
-                <img class="headimg" slot-scope="scope" v-if="scope.row.headimgurl" :src="scope.row.headimgurl" />
-            </el-table-column>
+<!--            <el-table-column prop="city" header-align="center" align="center" label="城市">-->
+<!--            </el-table-column>-->
+<!--            <el-table-column prop="headimgurl" header-align="center" align="center" label="头像">-->
+<!--                <img class="headimg" slot-scope="scope" v-if="scope.row.headimgurl" :src="scope.row.headimgurl" />-->
+<!--            </el-table-column>-->
 <!--            <el-table-column prop="tagidList" header-align="center" align="center" label="标签" show-overflow-tooltip>-->
 <!--                <template slot-scope="scope">-->
 <!--                    <span v-for="tagid in scope.row.tagidList" :key="tagid">{{getTagName(tagid)}} </span>-->
@@ -47,6 +47,9 @@
 <!--            </el-table-column>-->
             <el-table-column prop="subscribeTime" header-align="center" align="left" width="150" label="订阅时间">
                 <template slot-scope="scope">{{$moment(scope.row.subscribeTime).calendar()}}</template>
+            </el-table-column>
+            <el-table-column prop="updateTime" header-align="center" align="left" width="150" label="更新时间">
+                <template slot-scope="scope">{{$moment(scope.row.updateTime).calendar()}}</template>
             </el-table-column>
 <!--            <el-table-column prop="qrSceneStr" header-align="center" align="center" label="场景值">-->
 <!--            </el-table-column>-->
