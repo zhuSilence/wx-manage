@@ -7,6 +7,9 @@
                 </el-select>
             </el-form-item>
             <el-form-item>
+                <el-input v-model="dataForm.openid" placeholder="OpenId" clearable></el-input>
+            </el-form-item>
+            <el-form-item>
                 <el-input v-model="dataForm.nickname" placeholder="昵称" clearable></el-input>
             </el-form-item>
             <el-form-item>
@@ -118,6 +121,7 @@ export default {
                     'page': this.pageIndex,
                     'limit': this.pageSize,
                     'nickname': this.dataForm.nickname,
+                    'openid': this.dataForm.openid,
                     'tagid': this.dataForm.tagid,
                     'city': this.dataForm.city,
                     'qrSceneStr': this.dataForm.qrSceneStr,
