@@ -121,7 +121,7 @@ export default {
                     'tagid': this.dataForm.tagid,
                     'city': this.dataForm.city,
                     'qrSceneStr': this.dataForm.qrSceneStr,
-                    'sidx': 'subscribe_time',
+                    'sidx': 'update_time',
                     'order': 'desc'
                 })
             }).then(({ data }) => {
