@@ -10,6 +10,12 @@
             <el-form-item label="绘图额度" prop="url">
                 <el-input-number v-model="dataForm.imgCount" placeholder="数字类型"></el-input-number>
             </el-form-item>
+            <el-form-item label="启用 GPT4">
+                <el-radio-group v-model="dataForm.enableGpt4">
+                    <el-radio :label="1" size="large">是</el-radio>
+                    <el-radio :label="0" size="large">否</el-radio>
+                </el-radio-group>
+            </el-form-item>
 
         </el-form>
         <span slot="footer" class="dialog-footer">
@@ -26,7 +32,9 @@ export default {
             visible: false,
             dataForm: {
                 id: 0,
-                count: 0
+                count: 0,
+                imgCount: 0,
+                enableGpt4: 0
             },
             dataRule: {
                 count: [
@@ -56,6 +64,7 @@ export default {
                             let extraInfo = JSON.parse(data.wxUser.extraInfo);
                             this.dataForm.count = extraInfo.openApiCount;
                             this.dataForm.imgCount = extraInfo.imageApiCount;
+                            this.dataForm.enableGpt4 = extraInfo.enableGpt4 === 1 ? 1 : 0;
                         }else{
                             this.$message.error(data.msg)
                         }
